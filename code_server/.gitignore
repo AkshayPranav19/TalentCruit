@@ -1,0 +1,4 @@
+node_modules/
+*.py
+*.js        # temp code files
+.env        # if you use environment vars
