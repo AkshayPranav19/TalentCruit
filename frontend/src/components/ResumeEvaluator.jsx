@@ -51,6 +51,7 @@ const updateUserScores = async (mlScoreValue, llmScoreValue, llmPromptValue) => 
   try {
     console.log('Updating user scores:', {
       email: userEmail,
+      job_role: jobRole,
       mlScore: mlScoreValue,
       llmScore: llmScoreValue,
       gptFeedback: llmPromptValue
@@ -58,6 +59,7 @@ const updateUserScores = async (mlScoreValue, llmScoreValue, llmPromptValue) => 
 
     const response = await axios.put('http://localhost:3001/update-user-by-email', {
       email: userEmail,
+      job_role: jobRole,
       completed_resume: true,
       mlScore: mlScoreValue,
       llmScore: llmScoreValue,
@@ -400,10 +402,10 @@ const updateUserScores = async (mlScoreValue, llmScoreValue, llmPromptValue) => 
           </div>
 
           <div className="details-section">
-            <div className="detail-card">
+            {/* <div className="detail-card">
               <h3 className="detail-title">📝 Analysis Prompt</h3>
               <div className="detail-content">{llmPrompt}</div>
-            </div>
+            </div> */}
 
             <div className="detail-card">
               <h3 className="detail-title">🎯 SWOT Analysis</h3>

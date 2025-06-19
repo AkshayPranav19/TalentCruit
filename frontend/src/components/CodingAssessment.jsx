@@ -6,7 +6,7 @@ import { oneDark }  from "@codemirror/theme-one-dark";
 import { useNavigate } from 'react-router-dom';
 import Editor from "@monaco-editor/react";
 import axios from 'axios';
-
+import logoSrc from './logo.png';
 export default function CodingAssessment() {
    const navigate = useNavigate();
   const userEmail = localStorage.getItem('userEmail') || '';
@@ -533,8 +533,8 @@ const handleSubmitAssessment = async () => {
           padding: 20px 0;
         }
         .logo {
-          width: 60px;
-          height: 60px;
+          width: 80px;
+          height: 80px;
           background: linear-gradient(135deg, #ff6b9d, #4dabf7);
           border-radius: 50%;
           margin: 0 auto 20px;
@@ -772,7 +772,7 @@ const handleSubmitAssessment = async () => {
 
       <div className="container">
         <div className="header">
-          <div className="logo">TC</div>
+          <img src={logoSrc} className="logo" alt="Logo" />
           <h1>TalentCruit AI</h1>
           <p>Coding Assessment Challenge</p>
         </div>

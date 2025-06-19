@@ -448,7 +448,7 @@ export default function Dashboard() {
           {/* Coding Score */}
           <div className="score-card">
             <div className="score-value">
-              {userData?.codeScore || 'N/A'}
+              {userData?.codeScore || 0}
             </div>
             <div className="score-label">Coding Score</div>
             <div className="score-description">Technical Assessment</div>
@@ -490,19 +490,19 @@ export default function Dashboard() {
           </div>
           <div className="breakdown-item">
             <span>ML Score (20%)</span>
-            <span>{userData?.mlScore || 'N/A'} × 0.2 = {userData?.mlScore ? Math.round(userData.mlScore * 0.2) : 'N/A'}</span>
+            <span>{userData?.mlScore || 0} × 0.2 = {userData?.mlScore ? Math.round(userData.mlScore * 0.2) : 0}</span>
           </div>
           <div className="breakdown-item">
             <span>LLM Score (40%)</span>
-            <span>{userData?.llmScore || 'N/A'} × 0.4 = {userData?.llmScore ? Math.round(userData.llmScore * 0.4) : 'N/A'}</span>
+            <span>{userData?.llmScore || 0} × 0.4 = {userData?.llmScore ? Math.round(userData.llmScore * 0.4) : 0}</span>
           </div>
           <div className="breakdown-item">
             <span>Coding Score (40%)</span>
-            <span>{userData?.codeScore || 'N/A'} × 0.4 = {userData?.codeScore ? Math.round(userData.codeScore * 0.4) : 'N/A'}</span>
+            <span>{userData?.codeScore || 0} × 0.4 = {userData?.codeScore ? Math.round(userData.codeScore * 0.4) : 0}</span>
           </div>
           <div className="breakdown-item">
             <span>Total Score</span>
-            <span>{userData?.total || userData?.totalScore || 'N/A'}</span>
+            <span>{userData?.total || userData?.totalScore || 0}</span>
           </div>
         </div>
 
