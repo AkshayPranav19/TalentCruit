@@ -109,16 +109,17 @@ const updateUserScores = async (mlScoreValue, llmScoreValue, llmPromptValue) => 
       );
       setLlmScore(Math.round(llmRes.data.score));
       setLlmPrompt(llmRes.data.prompt); 
-
-      
-      const swotRes = await axios.post(
-        'http://localhost:8001/swot',
-        { score: llmRes.data.score, prompt: llmRes.data.prompt }
-      );
-      setSwot(swotRes.data.swot);
+      setSwot(llmRes.data.swot);
       setShowResults(true);
+      
+      // const swotRes = await axios.post(
+      //   'http://localhost:8001/swot',
+      //   { score: llmRes.data.score, prompt: llmRes.data.prompt }
+      // );
+      // setSwot(swotRes.data.swot);
+      // setShowResults(true);
 
-       await updateUserScores(Math.round(mlRes.data.score), Math.round(llmRes.data.score), swotRes.data.swot);
+       await updateUserScores(Math.round(mlRes.data.score), Math.round(llmRes.data.score), llmRes.data.swot);
  
 
     } catch (err) {
@@ -402,10 +403,10 @@ const updateUserScores = async (mlScoreValue, llmScoreValue, llmPromptValue) => 
           </div>
 
           <div className="details-section">
-            {/* <div className="detail-card">
+            <div className="detail-card">
               <h3 className="detail-title">📝 Analysis Prompt</h3>
               <div className="detail-content">{llmPrompt}</div>
-            </div> */}
+            </div>
 
             <div className="detail-card">
               <h3 className="detail-title">🎯 SWOT Analysis</h3>
@@ -667,6 +668,7 @@ const updateUserScores = async (mlScoreValue, llmScoreValue, llmPromptValue) => 
               value={salary}
               min={40000}
               max={150000}
+              step = {1000}
               onChange={e => setSalary(+e.target.value)}
               className="form-input"
             />
