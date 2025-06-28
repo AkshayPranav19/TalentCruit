@@ -1,22 +1,24 @@
-// Assessment Configuration
-export const TOTAL_QUESTIONS = 4;
-export const ASSESSMENT_DURATION = 60 * 60; // 1 hour in seconds
-export const LANGUAGE = "python";
-
-// API Endpoints
-export const API_BASE_URL = "http://localhost:3001";
-export const TEST_RUNNER_URL = "http://localhost:5002";
-
-// Score Calculation Weights
-export const SCORE_WEIGHTS = {
-  ML: 0.2,
-  LLM: 0.4,
-  CODE: 0.4
+// constants.js
+export const ASSESSMENT_CONFIG = {
+  TOTAL_TIME: 60 * 60, // 1 hour in seconds
+  TOTAL_QUESTIONS: 4,
+  LANGUAGE: "python"
 };
 
-export const ACCEPTANCE_THRESHOLD = 60;
+export const API_ENDPOINTS = {
+  GET_USER: (email) => `http://localhost:3001/get-user/${email}`,
+  UPDATE_USER: 'http://localhost:3001/update-user-by-email',
+  RUN_TESTS: 'http://localhost:5002/run-tests'
+};
 
-// Language Templates
+export const SCORING_WEIGHTS = {
+  ML_SCORE: 0.2,
+  LLM_SCORE: 0.4,
+  CODE_SCORE: 0.4
+};
+
+export const PASS_THRESHOLD = 60;
+
 export const LANGUAGE_TEMPLATES = {
   1: `def two_sum(nums, target):
     # Write your solution here
@@ -38,7 +40,6 @@ export const LANGUAGE_TEMPLATES = {
     pass`
 };
 
-// Question Data
 export const QUESTIONS = [
   {
     id: 1,
@@ -125,20 +126,3 @@ export const QUESTIONS = [
     ]
   }
 ];
-
-// Error Messages
-export const ERROR_MESSAGES = {
-  USER_NOT_FOUND: "User not found in database",
-  NETWORK_ERROR: "Could not connect to test server",
-  NO_CODE: "Please write some code before running tests.",
-  SYNTAX_ERROR: "Syntax Error",
-  EXECUTION_ERROR: "Execution Error",
-  TIMEOUT_ERROR: "Timeout Error: Code took too long to execute"
-};
-
-// UI Text
-export const UI_TEXT = {
-  COMPLETION_MESSAGE: "Thank you for completing the TalentCruit AI coding assessment. Your solutions have been submitted for review.",
-  RESET_CONFIRMATION: "Are you sure you want to reset your code? This action cannot be undone.",
-  NO_CODE_TO_TEST: "No code to test."
-};

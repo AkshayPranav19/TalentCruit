@@ -1,16 +1,31 @@
-// timerUtils.js
+/**
+
+ * @param {number} seconds 
+ * @returns {string}
+ */
 export const formatTime = (seconds) => {
   const minutes = Math.floor(seconds / 60);
   const secs = seconds % 60;
   return `${minutes.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
 };
 
-export const useTimer = (initialTime, isSubmitted, handleSubmitAssessment) => {
-  const startTimer = (setTimeRemaining) => {
+/**
+
+ * @param {number} initialTime 
+ * @param {function} onTimeUp 
+ * @param {boolean} isActive 
+ * @returns {object} 
+ */
+export const useCountdownTimer = (initialTime, onTimeUp, isActive = true) => {
+  const [timeRemaining, setTimeRemaining] = useState(initialTime);
+  
+  useEffect(() => {
+    if (!isActive) return;
+    
     const timerInterval = setInterval(() => {
       setTimeRemaining(prev => {
-        if (prev <= 1 && !isSubmitted) {
-          handleSubmitAssessment();
+        if (prev <= 1) {
+          onTimeUp();
           return 0;
         }
         return prev - 1;
@@ -18,7 +33,11 @@ export const useTimer = (initialTime, isSubmitted, handleSubmitAssessment) => {
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  };
+  }, [isActive, onTimeUp]);
 
-  return { startTimer };
+  return {
+    timeRemaining,
+    formattedTime: formatTime(timeRemaining),
+    setTimeRemaining
+  };
 };

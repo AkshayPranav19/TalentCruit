@@ -10,7 +10,7 @@ import { EDU_MAP, JOB_MAP, relevanceIndex, updateUserScores } from './utils.js';
 
 export default function ResumeEvaluator() {
   const userEmail = localStorage.getItem('userEmail') || '';
-
+  console.log
   const [experience, setExperience] = useState(0);
   const [salary, setSalary] = useState(40000);
   const [projects, setProjects] = useState(0);
@@ -61,7 +61,7 @@ export default function ResumeEvaluator() {
       setLlmPrompt(llmRes.data.prompt); 
       setSwot(llmRes.data.swot);
       setShowResults(true);
-      await updateUserScores(Math.round(mlRes.data.score), Math.round(llmRes.data.score), llmRes.data.swot);
+      await updateUserScores(userEmail, Math.round(mlRes.data.score), Math.round(llmRes.data.score), llmRes.data.swot);
 
     } catch (err) {
       console.error(err);

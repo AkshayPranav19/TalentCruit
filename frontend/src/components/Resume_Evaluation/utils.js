@@ -1,3 +1,4 @@
+import axios from 'axios';
 export const EDU_MAP = { 
   'B.Sc': 0, 
   'B.Tech': 1, 
@@ -31,40 +32,27 @@ export function relevanceIndex(skillsStr, role) {
     : 0;
 }
 
-export const updateUserScores = async (userEmail, jobRole, mlScoreValue, llmScoreValue, llmPromptValue) => {
+export const updateUserScores = async (userEmail, mlScoreValue, llmScoreValue, llmPromptValue) => {
   try {
     console.log('Updating user scores:', {
       email: userEmail,
-      job_role: jobRole,
       mlScore: mlScoreValue,
       llmScore: llmScoreValue,
       gptFeedback: llmPromptValue
     });
 
-    const response = await fetch('http://localhost:3001/update-user-by-email', {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: userEmail,
-        job_role: jobRole,
-        completed_resume: true,
-        mlScore: mlScoreValue,
-        llmScore: llmScoreValue,
-        gptFeedback: llmPromptValue
-      })
+    const response = await axios.put('http://localhost:3001/update-user-by-email', {
+      email: userEmail,
+      completed_resume: true,
+      mlScore: mlScoreValue,
+      llmScore: llmScoreValue,
+      gptFeedback: llmPromptValue
     });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    const data = await response.json();
-    console.log('User scores updated successfully:', data);
-    return data;
+    
+    console.log('User scores updated successfully:', response.data);
+    return response.data;
   } catch (error) {
-    console.error('Error updating user scores:', error.message);
-    throw error; 
+    console.error('Error updating user scores:', error.response?.data || error.message);
+    throw error; // Re-throw to handle in calling function
   }
 };
