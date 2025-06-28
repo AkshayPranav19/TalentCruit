@@ -398,13 +398,10 @@ export default function Dashboard() {
       `}</style>
       
       <div className="container">
-        {/* Header */}
         <div className="header">
           <h1>Assessment Results</h1>
           <p>Welcome back, {userData?.name || 'User'}</p>
         </div>
-
-        {/* Application Status Card */}
         <div className="status-card">
           <h2 style={{ marginBottom: '30px', fontSize: '1.5rem' }}>Application Status</h2>
           <div 
@@ -416,9 +413,8 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Scores Grid */}
+
         <div className="scores-grid">
-          {/* Total Score */}
           <div className="score-card">
             <div className="score-value total-score">
               {userData?.total || userData?.totalScore || 'N/A'}
@@ -427,7 +423,7 @@ export default function Dashboard() {
             <div className="score-description">Overall Assessment</div>
           </div>
 
-          {/* ML Score */}
+
           <div className="score-card">
             <div className="score-value">
               {userData?.mlScore || 'N/A'}
@@ -436,7 +432,7 @@ export default function Dashboard() {
             <div className="score-description">Machine Learning Model</div>
           </div>
 
-          {/* LLM Score */}
+
           <div className="score-card">
             <div className="score-value">
               {userData?.llmScore || 'N/A'}
@@ -445,7 +441,7 @@ export default function Dashboard() {
             <div className="score-description">Resume Analysis</div>
           </div>
 
-          {/* Coding Score */}
+
           <div className="score-card">
             <div className="score-value">
               {userData?.codeScore || 0}
@@ -455,7 +451,7 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* GPT Feedback Section */}
+
         {userData?.gptFeedback && (
           <div className="feedback-card">
             <h3>Detailed Feedback</h3>
@@ -465,8 +461,7 @@ export default function Dashboard() {
           </div>
         )}
 
-        {/* Assessment Progress */}
-        <div className="progress-card">
+          <div className="progress-card">
           <h3>Assessment Progress</h3>
           <div className="progress-item">
             <span>Resume Evaluation</span>
@@ -482,7 +477,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Score Breakdown */}
         <div className="breakdown-card">
           <h3>Score Breakdown</h3>
           <div className="formula">
@@ -506,7 +500,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Logout Button */}
         <div className="text-center">
           <button
             className="btn"
