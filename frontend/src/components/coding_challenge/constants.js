@@ -6,9 +6,9 @@ export const ASSESSMENT_CONFIG = {
 };
 
 export const API_ENDPOINTS = {
-  GET_USER: (email) => `http://localhost:3001/get-user/${email}`,
-  UPDATE_USER: 'http://localhost:3001/update-user-by-email',
-  RUN_TESTS: 'http://localhost:5002/run-tests'
+  GET_USER: (email) => `https://talentcruit.onrender.com/get-user/${email}`,
+  UPDATE_USER: 'https://talentcruit.onrender.com/update-user-by-email',
+  RUN_TESTS: 'https://talentcruit-1.onrender.com/run-tests'
 };
 
 export const SCORING_WEIGHTS = {
