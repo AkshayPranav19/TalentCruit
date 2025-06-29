@@ -9,3 +9,6 @@ flask
 numpy
 lightgbm
 python-multipart
+flask-cors
+scikit-learn
+pillow
