@@ -46,14 +46,14 @@ export default function ResumeEvaluator() {
         job_code: JOB_MAP[jobRole],
         skill_relevance: relevanceIndex(skillList, jobRole)
       };
-      const mlRes = await axios.post('http://localhost:8003/evaluate', mlPayload);
+      const mlRes = await axios.post('https://flask-api-r5k3.onrender.com/evaluate', mlPayload);
       setMlScore(Math.round(mlRes.data.score));
       
       const form = new FormData();
       form.append('file', file);
       form.append('job_role', jobRole);
       const llmRes = await axios.post(
-        'http://localhost:8000/analyze-resume',
+        'https://fast-api-1hwr.onrender.com/analyze-resume',
         form,
         { headers: { 'Content-Type': 'multipart/form-data' } }
       );

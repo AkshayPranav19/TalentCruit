@@ -41,7 +41,7 @@ export const updateUserScores = async (userEmail, mlScoreValue, llmScoreValue, l
       gptFeedback: llmPromptValue
     });
 
-    const response = await axios.put('http://localhost:3001/update-user-by-email', {
+    const response = await axios.put('https://talentcruit.onrender.com/update-user-by-email', {
       email: userEmail,
       completed_resume: true,
       mlScore: mlScoreValue,

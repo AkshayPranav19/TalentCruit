@@ -34,6 +34,16 @@
           border: 1px solid rgba(255, 255, 255, 0.2);
           position: relative;
           z-index: 1;
+          max-height: 95vh;
+          overflow-y: auto;
+          scroll-behavior: smooth;
+          scrollbar-width: none;
+          -ms-overflow-style: none;
+        }
+        .register-container::-webkit-scrollbar {
+          width: 0;
+          height: 0;
+          background: transparent;
         }
 
         .logo-section {
