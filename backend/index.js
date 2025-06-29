@@ -6,8 +6,8 @@ const FormDataModel = require('./models/FormData');
 const app = express();
 app.use(express.json());
 app.use(cors());
-
-mongoose.connect('mongodb://127.0.0.1:27017/practice_mern');
+const mongoURI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/practice_mern';
+mongoose.connect(mongoURI);
 
 app.post('/register', (req, res) => {
     const {name, email, password} = req.body;
@@ -98,6 +98,7 @@ app.get('/get-all-users', (req, res) => {
     .catch(err => res.status(500).json({ error: 'Failed to fetch users' }));
 });
 
-app.listen(3001, () => {
-    console.log("Server listening on http://127.0.0.1:3001");
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
 });
