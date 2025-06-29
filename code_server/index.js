@@ -62,7 +62,7 @@ app.post("/run-tests", (req, res) => {
   child.stdin.end();
 });
 
-const PORT = 5002;
+const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
   console.log(`🧪 Test runner listening on http://localhost:${PORT}`);
 });
