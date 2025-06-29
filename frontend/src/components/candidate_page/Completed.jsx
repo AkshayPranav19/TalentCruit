@@ -20,7 +20,7 @@ export default function Dashboard() {
         }
 
         setLoading(true);
-        const response = await axios.get(`http://localhost:3001/get-user/${userEmail}`);
+        const response = await axios.get(`https://talentcruit.onrender.com/get-user/${userEmail}`);
         
         if (response.data === "User not found") {
           setError('User not found');
