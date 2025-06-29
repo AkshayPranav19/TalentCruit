@@ -6,7 +6,7 @@ import numpy as np
 import os
 
 app = Flask(__name__)
-CORS(app, origins=["https://talent-cruit.vercel.app/"])
+CORS(app)
 
 
 MODEL_PATH = os.path.join(os.path.dirname(__file__), 'resume_score_model.pkl')
