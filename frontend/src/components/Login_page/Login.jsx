@@ -17,7 +17,7 @@ const Login = () => {
   try {
   
     const loginRes = await axios.post(
-      'http://localhost:3001/login',
+      'https://talentcruit.onrender.com/login',
       { email, password }
     );
 
@@ -30,7 +30,7 @@ const Login = () => {
 
 
     const { data: user } = await axios.get(
-      `http://localhost:3001/get-user/${encodeURIComponent(email)}`
+      `https://talentcruit.onrender.com/get-user/${encodeURIComponent(email)}`
     );
 
     

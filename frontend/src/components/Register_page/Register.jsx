@@ -20,7 +20,7 @@ const Register = () => {
     }
     setIsLoading(true);
     try {
-      const result = await axios.post('http://localhost:3001/register', { name, email, password });
+      const result = await axios.post('https://talentcruit.onrender.com/register', { name, email, password });
       if (result.data === "Already registered") {
         alert("E-mail already registered! Please Login to proceed.");
         navigate('/login');
