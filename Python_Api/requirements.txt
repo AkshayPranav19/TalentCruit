@@ -1,0 +1,10 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+openai
+pdfplumber
+pdf2image
+pytesseract
+flask
+numpy
+lightgbm

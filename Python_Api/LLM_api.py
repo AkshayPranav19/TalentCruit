@@ -20,7 +20,7 @@ client = OpenAI(api_key=API_KEY)
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"] ,  # allow all origins or restrict as needed
+    allow_origins=["*"] ,  
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -32,7 +32,6 @@ def extract_text_from_pdf(pdf_path: str) -> str:
     """
     text = ""
     try:
-        # Direct extraction of first two pages
         with pdfplumber.open(pdf_path) as pdf:
             for page in pdf.pages[:2]:
                 if page_text := page.extract_text():
@@ -42,7 +41,6 @@ def extract_text_from_pdf(pdf_path: str) -> str:
     except Exception as e:
         print(f"Direct extraction failed: {e}")
 
-    # OCR fallback for first two pages
     print("Falling back to OCR for the first two pages.")
     try:
         images = convert_from_path(pdf_path)
@@ -59,16 +57,15 @@ async def analyze_resume(
     job_role: str    = Form(...)
 ):
     try:
-        # 1) Save PDF
         raw = await file.read()
         tmp_path = "uploaded_resume.pdf"
         with open(tmp_path, "wb") as f:
             f.write(raw)
 
-        # 2) Extract text
+       
         resume_text = extract_text_from_pdf(tmp_path)
 
-        # 3) Build prompt for score & category
+       
         prompt = (
             f"Job Position Name: {job_role or 'null'}\n\n"
             f"Resume Text:\n```\n{resume_text}\n```"
@@ -93,12 +90,12 @@ async def analyze_resume(
         score = result.get("score")
         category = result.get("category")
 
-        # 4) Build prompt for SWOT
+
         swot_system = (
             "You are a helpful HR analyst. Given a candidate's resume summary and score, "
             "if given text is not a resume output 'Not a resume', "
             "else produce a concise SWOT analysis with Strengths, Weaknesses, Opportunities, "
-            "and Improvements in two paragraphs of ~150 words each."
+            "and Improvements in two paragraphs without bullet points."
         )
         swot_user = f"Score: {score}/100\nPrompt:\n```\n{prompt}\n```"
         swot_resp = client.chat.completions.create(
@@ -112,7 +109,7 @@ async def analyze_resume(
         )
         swot_text = swot_resp.choices[0].message.content.strip()
 
-        # 5) Return combined response
+
         return {
             "score":    score,
             "category": category,
