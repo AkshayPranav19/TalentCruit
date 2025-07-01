@@ -13,6 +13,9 @@ MODEL_PATH = os.path.join(os.path.dirname(__file__), 'resume_score_model.pkl')
 with open(MODEL_PATH, 'rb') as f:
     model = pickle.load(f)
 
+@app.route('/ping', methods=['GET'])
+def ping():
+    return jsonify({'status': 'ok'}), 200
 
 @app.route('/evaluate', methods=['POST'])
 def evaluate():

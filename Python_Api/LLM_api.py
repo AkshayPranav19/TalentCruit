@@ -51,6 +51,10 @@ def extract_text_from_pdf(pdf_path: str) -> str:
 
     return text.strip()
 
+@app.get("/ping")
+async def ping():
+    return {"status": "ok"}
+
 @app.post("/analyze-resume")
 async def analyze_resume(
     file: UploadFile = File(...),
