@@ -25,6 +25,15 @@ app.post('/register', (req, res) => {
     })
 })
 
+
+
+app.get('/ping', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+
+
+
 app.post('/login', (req, res) => {
     const {email, password} = req.body;
     FormDataModel.findOne({email: email})
