@@ -51,6 +51,8 @@ def extract_text_from_pdf(pdf_path: str) -> str:
 
     return text.strip()
 
+@app.api_route("/ping",  methods=["GET","HEAD"])
+@app.api_route("/ping/", methods=["GET","HEAD"])
 @app.get("/ping")
 async def ping():
     return {"status": "ok"}
