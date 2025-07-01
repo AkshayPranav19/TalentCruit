@@ -12,6 +12,12 @@ app.use(bodyParser.json());
 
 const PYTHON_TIMEOUT_MS = 5000;
 
+
+app.get('/ping', (req, res) => {
+  res.status(200).json({ status: 'ok' });
+});
+
+
 app.post("/run-tests", (req, res) => {
   const { questionId, code } = req.body;
   if (!questionId || !code) {
@@ -64,5 +70,5 @@ app.post("/run-tests", (req, res) => {
 
 const PORT = process.env.PORT || 5002;
 app.listen(PORT, () => {
-  console.log(`🧪 Test runner listening on http://localhost:${PORT}`);
+  console.log(`Test runner listening on http://localhost:${PORT}`);
 });
