@@ -4,7 +4,7 @@ import Login from "./Login_page/Login.jsx";
 import Register from "./Register_page/Register.jsx";
 import ResumeEvaluator from "./Resume_Evaluation/ResumeEvaluator.jsx";
 import CodingAssessment from './coding_challenge/CodingAssessment.jsx';
-//import HR from './HRDashboard.jsx';
+import HR from './HR_dashboard/HRDashboard.jsx';
 import Completed from './candidate_page/Completed.jsx';
 export default function App() {
   return (
@@ -15,7 +15,7 @@ export default function App() {
       <Route path="/resume" element={<ResumeEvaluator />} />
       <Route path="/coding" element={<CodingAssessment />} />  
       <Route path="/completed" element={<Completed />} />
-      {/* <Route path="/hr" element={<HR />} /> */}
+      <Route path="/hr" element={<HR />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

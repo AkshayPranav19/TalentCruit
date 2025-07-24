@@ -94,6 +94,8 @@
   color: white;
   min-width: 200px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  height: 60px;
+text-align: center;
 }
 
 .dashboard-status-icon {

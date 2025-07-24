@@ -141,6 +141,3 @@ return (
 };
 
 export default Register;
-
-
-

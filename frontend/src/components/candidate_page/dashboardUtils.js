@@ -2,13 +2,13 @@ import axios from 'axios';
 export const getStatusColor = (status) => {
   switch (status?.toLowerCase()) {
     case 'accepted':
-      return 'linear-gradient(135deg, #10b981, #059669)';
+      return '#10b981';
     case 'rejected':
-      return 'linear-gradient(135deg, #ef4444, #dc2626)';
+      return '#ef4444';
     case 'waitlist':
-      return 'linear-gradient(135deg, #f59e0b, #d97706)';
+      return '#f59e0b';
     default:
-      return 'linear-gradient(135deg, #6b7280, #4b5563)';
+      return '#6b7280';
   }
 };
 

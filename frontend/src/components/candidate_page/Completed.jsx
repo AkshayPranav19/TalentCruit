@@ -85,15 +85,27 @@ export default function Dashboard() {
           <h1>Assessment Results</h1>
           <p>Welcome back, {userData?.name || 'User'}</p>
         </div>
-        
-        <div className="dashboard-status-card">
-          <h2 className="dashboard-status-title">Application Status</h2>
-          <div 
-            className="dashboard-status-badge" 
-            style={{ background: getStatusColor(userData?.accepted) }}
-          >
-            <span className="dashboard-status-icon">{getStatusIcon(userData?.accepted)}</span>
-            {userData?.accepted?.toUpperCase() || 'PENDING'}
+            
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap', marginBottom: '40px' }}>
+          <div className="dashboard-status-card">
+            <h2 className="dashboard-status-title">Application Status</h2>
+            <div 
+              className="dashboard-status-badge" 
+              style={{ background: getStatusColor(userData?.accepted) }}
+            >
+              <span className="dashboard-status-icon">{getStatusIcon(userData?.accepted)}</span>
+              {userData?.accepted?.toUpperCase() || 'PENDING'}
+            </div>
+          </div>
+
+          <div className="dashboard-status-card">
+            <h2 className="dashboard-status-title">Interview Status</h2>
+            <div 
+              className="dashboard-status-badge" 
+              style={{ background: userData?.interviewDate ? '#10b981' : '#ef4444' }}
+            >
+              {userData?.interviewDate ? userData?.interviewDate : 'NOT SCHEDULED'}
+            </div>
           </div>
         </div>
 
@@ -105,21 +117,20 @@ export default function Dashboard() {
             <div className="dashboard-score-label">Total Score</div>
             <div className="dashboard-score-description">Overall Assessment</div>
           </div>
-
           <div className="dashboard-score-card">
             <div className="dashboard-score-value">
               {userData?.mlScore || 'N/A'}
             </div>
-            <div className="dashboard-score-label">ML Score</div>
-            <div className="dashboard-score-description">Machine Learning Model</div>
+            <div className="dashboard-score-label">Job Match Score</div>
+            <div className="dashboard-score-description">your profile was matched with our job requirements</div>
           </div>
 
           <div className="dashboard-score-card">
             <div className="dashboard-score-value">
               {userData?.llmScore || 'N/A'}
             </div>
-            <div className="dashboard-score-label">LLM Score</div>
-            <div className="dashboard-score-description">Resume Analysis</div>
+            <div className="dashboard-score-label">Resume Score</div>
+            <div className="dashboard-score-description">Your Resume Analysis</div>
           </div>
 
           <div className="dashboard-score-card">
@@ -145,13 +156,13 @@ export default function Dashboard() {
           <div className="dashboard-progress-item">
             <span>Resume Evaluation</span>
             <span className={`dashboard-progress-status ${userData?.completed_resume ? 'completed' : 'pending'}`}>
-              {userData?.completed_resume ? '✓ Completed' : '⏳ Pending'}
+              {userData?.completed_resume ? '✓ Completed' : 'Pending'}
             </span>
           </div>
           <div className="dashboard-progress-item">
             <span>Coding Assessment</span>
             <span className={`dashboard-progress-status ${userData?.completed_coding ? 'completed' : 'pending'}`}>
-              {userData?.completed_coding ? '✓ Completed' : '⏳ Pending'}
+              {userData?.completed_coding ? '✓ Completed' : 'Pending'}
             </span>
           </div>
         </div>
