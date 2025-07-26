@@ -7,6 +7,9 @@ const Applicants = () => {
 
     const [applicants, setApplicants] = useState([])
     const [selectedFeedback, setSelectedFeedback] = useState(null)
+    const [editingId, setEditingId] = useState(null);
+    const [selectedDate, setSelectedDate] = useState('');
+    const [selectedTime, setSelectedTime] = useState('');
 
     const handleDecision = async (userEmail, newStatus) => {
         try {
@@ -26,6 +29,46 @@ const Applicants = () => {
             )
         }
     }
+
+    const handleSaveInterview = async (email) => {
+        try {
+            if (!selectedDate || !selectedTime) return;
+
+            const combinedISO = `${selectedDate}T${selectedTime}`;
+            const dateObj = new Date(combinedISO);
+
+            if (isNaN(dateObj.getTime())) throw new Error("Invalid date or time");
+
+            const day = dateObj.getDate();
+            const month = dateObj.getMonth() + 1;
+            const year = dateObj.getFullYear();
+            const hour = dateObj.getHours();
+            const minute = dateObj.getMinutes();
+            const suffix = hour >= 12 ? 'pm' : 'am';
+            const hour12 = hour % 12 === 0 ? 12 : hour % 12;
+
+            const paddedMinute = minute.toString().padStart(2, '0');
+
+            const formatted = `${day}/${month}/${year} ${hour12}:${paddedMinute}${suffix}`;
+
+            const response = await axios.put(`${API_URL}/update-user-by-email`, {
+            email,
+            interviewDate: formatted,
+            });
+
+            setApplicants(prev =>
+            prev.map(app =>
+                app.email === email ? response.data : app
+            )
+            );
+
+            setEditingId(null);
+            setSelectedDate('');
+            setSelectedTime('');
+        } catch (error) {
+            console.error("Error scheduling interview:", error.response?.data || error.message);
+        }
+    };
 
     const fetchApplicant = async () => {
         try {
@@ -55,6 +98,30 @@ const Applicants = () => {
                 return 'bg-gray-100 text-gray-800';
             }
         };
+const getInterviewStatusClass = (interviewDateStr) => {
+  if (!interviewDateStr || interviewDateStr.trim() === '') {
+    return 'bg-yellow-100 text-yellow-800'; // Not scheduled
+  }
+
+  const match = interviewDateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2})(?::(\d{2}))?(am|pm)$/i);
+
+  if (!match) return 'bg-yellow-100 text-yellow-800'; // Fallback
+
+  const [, day, month, year, hourRaw, minuteRaw = '0', suffix] = match;
+
+  let hour = parseInt(hourRaw, 10);
+  const minute = parseInt(minuteRaw, 10);
+
+  if (suffix.toLowerCase() === 'pm' && hour !== 12) hour += 12;
+  if (suffix.toLowerCase() === 'am' && hour === 12) hour = 0;
+
+  const interviewDate = new Date(year, month - 1, day, hour, minute);
+  const now = new Date();
+
+  return interviewDate < now
+    ? 'bg-red-100 text-red-800'    // Missed
+    : 'bg-green-100 text-green-800'; // Scheduled
+};
 
   return (
     
@@ -69,15 +136,15 @@ const Applicants = () => {
                 <thead className='text-gray-600'>
                     <tr>
                         <th className='p-3 font-medium'>Name</th>
-                        <th className='p-3 font-medium'>Job Role</th>
-                        <th className='p-3 font-medium'>Resume Submission</th>
-                        <th className='p-3 font-medium'>Coding Completed</th>
-                        <th className='p-3 font-medium'>Total Score</th>
-                        <th className='p-3 font-medium'>Coding Score</th>
+                        <th className='p-3 font-medium'>Job<br />Role</th>
+                        <th className='p-3 font-medium'>Resume<br />Submission</th>
+                        <th className='p-3 font-medium'>Coding<br />Completed</th>
+                        <th className='p-3 font-medium'>Total<br />Score</th>
+                        <th className='p-3 font-medium'>Coding<br />Score</th>
                         <th className='p-3 font-medium'>Status</th>
-                        <th className='p-3 font-medium'>AI Feedback</th>
+                        <th className='p-3 font-medium'>AI <br />Feedback</th>
                         <th className='p-3 font-medium'>Actions</th>
-                        <th className='p-3 font-medium'>Schedule Interview</th>
+                        <th className='p-3 font-medium'>Schedule<br />Interview</th>
                     </tr>
                 </thead>
                     <tbody>
@@ -110,6 +177,61 @@ const Applicants = () => {
                                 >
                                     Reject
                                 </button>
+                                </td>
+
+
+                                <td className="p-3 text-left">
+                                <span
+                                className={`inline-block px-2 py-1 rounded text-xs font-semibold ${getInterviewStatusClass(applicant.interviewDate)}`}
+                                >
+                                {applicant.interviewDate && applicant.interviewDate.trim() !== ''
+                                    ? applicant.interviewDate
+                                    : 'Not Scheduled'}
+                                </span>
+
+                                {editingId === applicant.email ? (
+                                    <div className="mt-2 space-y-1">
+                                    <input
+                                        type="date"
+                                        value={selectedDate}
+                                        onChange={(e) => setSelectedDate(e.target.value)}
+                                        className="border px-2 py-1 rounded"
+                                    />
+                                    <input
+                                        type="time"
+                                        value={selectedTime}
+                                        onChange={(e) => setSelectedTime(e.target.value)}
+                                        className="border px-2 py-1 rounded ml-2"
+                                    />
+                                    <div className="mt-2 space-x-2">
+                                        <button
+                                        onClick={() => handleSaveInterview(applicant.email)}
+                                        className="bg-blue-600 text-white px-3 py-1 rounded"
+                                        >
+                                        Save
+                                        </button>
+                                        <button
+                                        onClick={() => {
+                                            setEditingId(null);
+                                            setSelectedDate('');
+                                            setSelectedTime('');
+                                        }}
+                                        className="bg-gray-300 text-gray-800 px-3 py-1 rounded hover:bg-gray-400"
+                                        >
+                                        Cancel
+                                        </button>
+                                    </div>
+                                    </div>
+                                ) : (
+                                    <div className="mt-1">
+                                    <button
+                                        onClick={() => setEditingId(applicant.email)}
+                                        className="text-xs text-blue-600 underline"
+                                    >
+                                        Schedule
+                                    </button>
+                                    </div>
+                                )}
                                 </td>
                             </tr>
 

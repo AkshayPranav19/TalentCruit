@@ -24,13 +24,15 @@ const Dashboard = () => {
             const accepted = users.filter(u => u.accepted === 'accepted').length
             const waitlist = users.filter(u => u.accepted === 'waitlist').length
             const rejected = users.filter(u => u.accepted === 'rejected').length
+            const scheduled = users.filter(u => u.interviewDate && u.interviewDate.trim() !== '').length
+            const upcoming = users.filter(u => u.interviewDate && u.interviewDate.trim() !== '');
             setData({
             totalApplicants: total,
             acceptedApplicants: accepted,
             waitlistApplicants: waitlist,
             rejectedApplicants: rejected,
-            scheduledInterviews: 0,      
-            upcomingInterviews: [],      
+            scheduledInterviews: scheduled,
+            upcomingInterviews: upcoming,
             })
         } catch (err) {
             console.error('Failed to fetch dashboard stats:', err)
@@ -69,9 +71,39 @@ const Dashboard = () => {
     </div>
 
     <div>
-        <div className='p-2 border border-gray-200 rounded-md max-w-3xl'>
+        {/* <div className='p-2 border border-gray-200 rounded-md max-w-3xl'>
             <h2>Upcoming Interviews</h2>
-        </div>
+        </div> */}
+        <div>
+  <div className='p-2 border border-gray-200 rounded-md max-w-3xl'>
+    <h2 className='text-lg font-semibold mb-2'>Upcoming Interviews</h2>
+    
+    {data.upcomingInterviews.length === 0 ? (
+      <p className="text-sm text-gray-600">No upcoming interviews scheduled.</p>
+    ) : (
+      <table className="w-full text-sm text-left text-gray-800 border-t mt-2">
+        <thead>
+          <tr>
+            <th className="py-2 pr-4 font-medium">Name</th>
+            <th className="py-2 pr-4 font-medium">Email</th>
+            <th className="py-2 pr-4 font-medium">Job Role</th>
+            <th className="py-2 font-medium">Interview Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.upcomingInterviews.map((user, index) => (
+            <tr key={index} className="border-t">
+              <td className="py-2 pr-4">{user.name}</td>
+              <td className="py-2 pr-4">{user.email}</td>
+              <td className="py-2 pr-4">{user.job_role}</td>
+              <td className="py-2">{user.interviewDate}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    )}
+  </div>
+</div>
         
     </div>
 </div>
