@@ -11,10 +11,6 @@ const Sidebar = () => {
             <NavLink className={({isActive})=> `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-50 cursor-pointer ${isActive ? 'bg-[#d9dae5] border-r-4 border-[#3D7FBE]':''}`}to={'/applicants'}>
                 <p className='font-medium text-gray-700'>Applicants</p>
             </NavLink>
-            
-            <NavLink className={({isActive})=> `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-50 cursor-pointer ${isActive ? 'bg-[#d9dae5] border-r-4 border-[#3D7FBE]':''}`}to={'/interviews'}>
-                <p className='font-medium text-gray-700'>Interviews</p>
-            </NavLink>
 
             <NavLink className={({isActive})=> `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-50 cursor-pointer ${isActive ? 'bg-[#d9dae5] border-r-4 border-[#3D7FBE]':''}`}to={'/questions'}>
                 <p className='font-medium text-gray-700'>Questions</p>

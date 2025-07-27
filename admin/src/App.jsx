@@ -4,7 +4,6 @@ import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar';
 import { Route, Routes, Navigate } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
-import Interviews from './pages/Interviews';
 import Metrics from './pages/Metrics';
 import Questions from './pages/Questions';
 import Applicants from './pages/Applicants';
@@ -18,7 +17,6 @@ const App = () => {
         <Routes>
           <Route path='/' element={<Dashboard />} />
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/interviews' element={<Interviews />} />
           <Route path='/metrics' element={<Metrics />} />
           <Route path='/questions' element={<Questions />} />
           <Route path='/applicants' element={<Applicants />} />
