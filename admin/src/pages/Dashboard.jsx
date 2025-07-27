@@ -12,6 +12,22 @@ const Dashboard = () => {
          upcomingInterviews: [],
      })
 
+       const parseInterviewTimestamp = (str) => {
+        if (!str || str.trim() === '') {
+            return 0; 
+        }
+
+        const match = str.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2})(?::(\d{2}))?(am|pm)$/i);
+        if (!match) return 0; 
+        const [, day, month, year, hourRaw, minuteRaw = '0', suffix] = match;
+        let hour = parseInt(hourRaw, 10);
+        const minute = parseInt(minuteRaw, 10);
+        if (suffix.toLowerCase() === 'pm' && hour !== 12) hour += 12;
+        if (suffix.toLowerCase() === 'am' && hour === 12) hour = 0;
+        const interviewDate = new Date(year, month - 1, day, hour, minute);
+        return interviewDate.getTime(); 
+      
+    };
 
     useEffect(() => {
         const fetchStats = async () => {
@@ -25,7 +41,15 @@ const Dashboard = () => {
             const waitlist = users.filter(u => u.accepted === 'waitlist').length
             const rejected = users.filter(u => u.accepted === 'rejected').length
             const scheduled = users.filter(u => u.interviewDate && u.interviewDate.trim() !== '').length
-            const upcoming = users.filter(u => u.interviewDate && u.interviewDate.trim() !== '');
+            const upcoming = users
+              .filter(u =>
+                u.interviewDate?.trim() &&
+                parseInterviewTimestamp(u.interviewDate) > Date.now()
+              )
+              .sort((a, b) =>
+                parseInterviewTimestamp(a.interviewDate)
+                - parseInterviewTimestamp(b.interviewDate)
+              );
             setData({
             totalApplicants: total,
             acceptedApplicants: accepted,
@@ -71,9 +95,6 @@ const Dashboard = () => {
     </div>
 
     <div>
-        {/* <div className='p-2 border border-gray-200 rounded-md max-w-3xl'>
-            <h2>Upcoming Interviews</h2>
-        </div> */}
         <div>
   <div className='p-2 border border-gray-200 rounded-md max-w-3xl'>
     <h2 className='text-lg font-semibold mb-2'>Upcoming Interviews</h2>
@@ -96,7 +117,11 @@ const Dashboard = () => {
               <td className="py-2 pr-4">{user.name}</td>
               <td className="py-2 pr-4">{user.email}</td>
               <td className="py-2 pr-4">{user.job_role}</td>
-              <td className="py-2">{user.interviewDate}</td>
+              <td className="py-2">
+              <span className="inline-block px-2 py-1 rounded text-xs font-semibold bg-green-100 text-green-800">
+                {user.interviewDate?.trim() || 'Not Scheduled'}
+              </span>
+              </td>
             </tr>
           ))}
         </tbody>
@@ -112,3 +137,5 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
+

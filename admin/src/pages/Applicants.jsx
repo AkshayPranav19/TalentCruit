@@ -98,30 +98,30 @@ const Applicants = () => {
                 return 'bg-gray-100 text-gray-800';
             }
         };
-const getInterviewStatusClass = (interviewDateStr) => {
-  if (!interviewDateStr || interviewDateStr.trim() === '') {
-    return 'bg-yellow-100 text-yellow-800'; // Not scheduled
-  }
+    const getInterviewStatusClass = (interviewDateStr) => {
+        if (!interviewDateStr || interviewDateStr.trim() === '') {
+            return 'bg-yellow-100 text-yellow-800'; 
+        }
 
-  const match = interviewDateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2})(?::(\d{2}))?(am|pm)$/i);
+        const match = interviewDateStr.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4}) (\d{1,2})(?::(\d{2}))?(am|pm)$/i);
 
-  if (!match) return 'bg-yellow-100 text-yellow-800'; // Fallback
+        if (!match) return 'bg-yellow-100 text-yellow-800'; 
 
-  const [, day, month, year, hourRaw, minuteRaw = '0', suffix] = match;
+        const [, day, month, year, hourRaw, minuteRaw = '0', suffix] = match;
 
-  let hour = parseInt(hourRaw, 10);
-  const minute = parseInt(minuteRaw, 10);
+        let hour = parseInt(hourRaw, 10);
+        const minute = parseInt(minuteRaw, 10);
 
-  if (suffix.toLowerCase() === 'pm' && hour !== 12) hour += 12;
-  if (suffix.toLowerCase() === 'am' && hour === 12) hour = 0;
+        if (suffix.toLowerCase() === 'pm' && hour !== 12) hour += 12;
+        if (suffix.toLowerCase() === 'am' && hour === 12) hour = 0;
 
-  const interviewDate = new Date(year, month - 1, day, hour, minute);
-  const now = new Date();
+        const interviewDate = new Date(year, month - 1, day, hour, minute);
+        const now = new Date();
 
-  return interviewDate < now
-    ? 'bg-red-100 text-red-800'    // Missed
-    : 'bg-green-100 text-green-800'; // Scheduled
-};
+        return interviewDate < now
+            ? 'bg-red-100 text-red-800'   
+            : 'bg-green-100 text-green-800'; 
+    };
 
   return (
     
